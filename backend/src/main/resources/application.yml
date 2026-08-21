@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cleartaxer-backend
+
+cleartaxer:
+  ai:
+    enabled: true
+    provider: anthropic
+    mock-fallback: true
