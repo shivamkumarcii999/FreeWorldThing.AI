@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IncomeDetails, DeductionDetails } from '../types/tax';
+import { DOCUMENT_API_BASE } from '../services/api';
 import { UploadCloud, FileText, CheckCircle2, AlertCircle, Sparkles, X, ArrowRight, ShieldCheck } from 'lucide-react';
 
 interface ExtractedDoc {
@@ -41,7 +42,7 @@ export const DocumentImportModal: React.FC<DocumentImportModalProps> = ({
   const handleFetchPreset = async (presetKey: string) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/tax/document/parse', {
+      const res = await fetch(`${DOCUMENT_API_BASE}/document/parse`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ presetTemplateKey: presetKey }),
@@ -59,7 +60,7 @@ export const DocumentImportModal: React.FC<DocumentImportModalProps> = ({
     if (!pastedText.trim()) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/tax/document/parse', {
+      const res = await fetch(`${DOCUMENT_API_BASE}/document/parse`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ documentText: pastedText }),

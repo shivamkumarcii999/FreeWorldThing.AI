@@ -8,7 +8,21 @@ import {
   TaxExplanationResponse
 } from '../types/tax';
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ? (import.meta.env.VITE_API_BASE_URL as string).replace(/\/$/, '') : '') + '/api/tax';
+// Resolve API base URL:
+// - Local dev: undefined -> same-origin, proxied by Vite to http://localhost:8080
+// - Render static site: VITE_API_BASE_URL comes from the backend service 'host' property
+//   (e.g. "cleartaxer-backend.onrender.com" or "https://cleartaxer-backend.onrender.com")
+const rawBase = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
+let origin = '';
+if (rawBase) {
+  origin = rawBase.replace(/\/$/, '');
+  if (!/^https?:\/\//i.test(origin)) {
+    origin = 'https://' + origin;
+  }
+}
+const API_BASE = origin + '/api/tax';
+
+export const DOCUMENT_API_BASE = API_BASE;
 
 export const taxApi = {
   async compareRegimes(request: TaxCalculationRequest): Promise<RegimeComparisonResult> {

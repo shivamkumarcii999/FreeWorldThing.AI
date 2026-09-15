@@ -18,7 +18,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Dynamic port binding (Render assigns PORT env var)
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT=10000
+EXPOSE 10000
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
