@@ -8,7 +8,7 @@ import {
   TaxExplanationResponse
 } from '../types/tax';
 
-const API_BASE = '/api/tax';
+const API_BASE = (import.meta.env.VITE_API_BASE_URL ? (import.meta.env.VITE_API_BASE_URL as string).replace(/\/$/, '') : '') + '/api/tax';
 
 export const taxApi = {
   async compareRegimes(request: TaxCalculationRequest): Promise<RegimeComparisonResult> {
