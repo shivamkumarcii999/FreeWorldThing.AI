@@ -37,7 +37,21 @@ public class SecurityConfig {
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .headers(h -> h.frameOptions(f -> f.sameOrigin()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/h2-console/**", "/error").permitAll()
+                .requestMatchers(
+                    "/",
+                    "/index.html",
+                    "/assets/**",
+                    "/favicon.ico",
+                    "/*.js",
+                    "/*.css",
+                    "/*.png",
+                    "/*.jpg",
+                    "/*.svg",
+                    "/h2-console/**",
+                    "/error",
+                    "/actuator/**"
+                ).permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/**").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.POST,
                         "/api/auth/**", "/api/ai/**").permitAll()
